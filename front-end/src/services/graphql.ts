@@ -1,13 +1,15 @@
 import { request, gql } from 'graphql-request';
 
 const determineAPIUrl = (): string => {
+  const isProduction = import.meta.env.PROD;
+  const productionUrl = 'https://clarke-w55t.onrender.com/graphql';
   const localUrl = 'http://localhost:8000/graphql';
   
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
   
-  return localUrl;
+  return isProduction ? productionUrl : localUrl;
 };
 
 const API_URL = determineAPIUrl();
