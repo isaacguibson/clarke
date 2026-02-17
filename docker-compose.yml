@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: clarke_db
+    environment:
+      POSTGRES_USER: clarke
+      POSTGRES_PASSWORD: clarke123
+      POSTGRES_DB: clarke_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clarke"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./back-end
+    container_name: clarke_backend
+    environment:
+      DATABASE_URL: postgresql://clarke:clarke123@db:5432/clarke_db
+      SECRET_KEY: your-secret-key-here
+      DEBUG: "True"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./back-end:/app
+    command: python main.py
+
+  frontend:
+    build: ./front-end
+    container_name: clarke_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
