@@ -44,3 +44,7 @@ A aplicação vem com dados fictícios pré-carregados no banco de dados:
 - 10 estados brasileiros com tarifas base realistas
 - 6 fornecedores fictícios com diferentes soluções
 - Múltiplas combinações de fornecedores por estado e solução
+
+## Live URL
+
+[Go Live](https://clarke-spa.onrender.com)
