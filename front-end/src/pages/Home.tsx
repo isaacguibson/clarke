@@ -123,7 +123,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-8 justify-center">
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-3">
-                Selecione seu Estado
+                Selecione seu Estado (pode demorar a aparecer por conta do serviço de cloud gratuito)
               </label>
               <select
                 value={estado}
